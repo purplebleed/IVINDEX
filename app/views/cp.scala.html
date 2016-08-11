@@ -1,0 +1,97 @@
+@import com.pokegoapi.api.pokemon.Pokemon
+@(pokemons: Map[String, List[Pokemon]])
+@import java.math.BigInteger; var firstTime=0; var count = 0; var c = 0; var p_count = 0;
+
+
+@main("IV chart"){
+
+    @*
+    * Get an `Html` object by calling the built-in Play welcome
+    * template and passing a `String` message.
+    *@
+
+    <div class="table-responsive" style="margin:10px 20px 0 20px;">
+
+        <div style="text-align: right">
+            <a href="/pokemon/logout" class="btn btn-info">Delete Token</a>
+        </div>
+
+        <table class="table" style="margin-top:10px">
+            <tr>
+                <th>
+                    Pokemon
+                </th>
+                <th>
+                    Count
+                </th>
+                <th style="white-space:nowrap">
+                    Candy / Candy To Evolve
+                </th>
+                <th>
+                    Evolve Count
+                </th>
+                <th>
+                    CP Lists
+                </th>
+            </tr>
+            @for((key, value) <- pokemons) {
+                <tr>
+                    <td>@key<br/>
+                        <img  height="50px" src="@routes.Assets.versioned("go/" + key.toLowerCase() + ".png")">
+                    </td>
+                    <td>@value.size()
+                        @{p_count += value.size()}
+                    </td>
+                    <td style="text-align:center">@value.get(0).getCandy() / @if(value.get(0).getCandiesToEvolve() != 0){@value.get(0).getCandiesToEvolve()}else{
+                        --
+                    }</td>
+                    <td style="text-align: center;">
+                    @if(value.get(0).getCandiesToEvolve() != 0){
+                        @{c = value.get(0).getCandy()/value.get(0).getCandiesToEvolve();
+                        count += c}
+                        @c
+                    }else {
+                        --
+                    }
+                    </td>
+                    <td>
+                    @for(pokemon <- value){
+                        @if( pokemon.getIvRatio() > 0.75 ){
+                            @if(pokemon.getIvRatio() > 0.9){
+                                <div class="col-md-3"> <b style="color: red">  CP: @("%03d".format(pokemon.getCp())) IV: @("%,.2f".format(pokemon.getIvRatio()*100).replace(".00","")) Weight: @("%,.2f".format(pokemon.getWeightKg()).replace(".00","")) </b> </div>
+
+                            }else{
+                                <div class="col-md-3"> <b>  CP: @("%03d".format(pokemon.getCp())) IV: @("%,.2f".format(pokemon.getIvRatio()*100).replace(".00","")) Weight: @("%,.2f".format(pokemon.getWeightKg()).replace(".00","")) </b> </div>
+                            }
+                            @{firstTime = 1}
+                        }else{
+                            @if(firstTime == 1){
+                                <br/>
+                                @{firstTime = 2}
+                            }
+                            <div class="col-md-3"> CP: @("%03d".format(pokemon.getCp())) IV: @("%,.2f".format(pokemon.getIvRatio()*100).replace(".00","")) Weight: @("%,.2f".format(pokemon.getWeightKg()).replace(".00","")) </div>
+                        }
+                    }
+                        @for(i <- 0 to (6-value.size()%4)-1){
+                            <div class="col-md-2"> </div>
+                        }
+                    </td>
+                </tr>
+            }
+            <td>
+                Total
+            </td>
+            <td>
+                @p_count
+            </td>
+            <td>
+            </td>
+            <td style="text-align: center;">
+                @count
+            </td>
+            <td>
+            </td>
+        </table>
+    </div>
+
+}

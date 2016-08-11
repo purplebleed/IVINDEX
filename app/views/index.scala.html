@@ -1,0 +1,32 @@
+@*
+ * This template takes a single argument, a String containing a
+ * message to display.
+ *@
+@(message: String, api:String)
+
+@*
+ * Call the `main` template with two arguments. The first
+ * argument is a `String` with the title of the page, the second
+ * argument is an `Html` object containing the body of the page.
+ *@
+@main(message){
+
+    @*
+     * Get an `Html` object by calling the built-in Play welcome
+     * template and passing a `String` message.
+     *@
+
+    <div style="margin: 10px 20px">
+        <h1>Please visit <a  target="_blank" href="@api">Google Pokemon auth</a> to get the token, then paste it here</h1>
+        @helper.form(action=routes.PokemonController.auth()){
+            <input type='text' name='token' class="form-control"/>
+            <br/>
+            <div style="text-align: center;">
+                <input type='submit' name='mysubmit' value='Get IV' class="btn btn-info" />
+            </div>
+
+        }
+
+    </div>
+
+}
