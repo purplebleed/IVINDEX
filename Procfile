@@ -1,0 +1,1 @@
+web: target/universal/stage/bin/play-getting-started -Dhttp.port=${PORT} -DAPPLICATION_SECRET=${APPLICATION_SECRET}
