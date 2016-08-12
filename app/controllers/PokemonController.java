@@ -35,7 +35,12 @@ public class PokemonController extends Controller{
             return redirect("/pokemon/cp");
         }
 
-        return ok(index.render("PokemonGo",GoogleUserCredentialProvider.LOGIN_URL));
+        return ok(index.render("PokemonGo",GoogleUserCredentialProvider.LOGIN_URL,  ""));
+    }
+
+    public Result error() {
+
+        return ok(index.render("PokemonGo",GoogleUserCredentialProvider.LOGIN_URL, "Something went wrong, please try again later"));
     }
 
     public Result logout() {
@@ -62,11 +67,12 @@ public class PokemonController extends Controller{
             if(go != null){
                 pokemon = listIvs(go,localeTW);
             }else{
-                return redirect("/");
+                return redirect("/error");
             }
         }catch (Exception e){
             e.printStackTrace();
             session().remove(REFRESHTOKEN);
+            return redirect("/error");
         }
 
         return ok(cp.render(pokemon));
@@ -80,8 +86,6 @@ public class PokemonController extends Controller{
             provider = new GoogleUserCredentialProvider(httpClient, refreshToken);
 
             go = new PokemonGo(provider, httpClient);
-        }else{
-            redirect("/");
         }
 
         return go;

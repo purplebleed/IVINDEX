@@ -6,6 +6,8 @@ GET     /                    controllers.PokemonController.index
 
 GET     /pokemon                    controllers.PokemonController.index
 
+GET     /error                    controllers.PokemonController.error
+
 POST     /pokemon/auth                controllers.PokemonController.auth
 
 GET     /pokemon/cp                 controllers.PokemonController.cp
