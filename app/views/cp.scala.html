@@ -1,6 +1,6 @@
 @import com.pokegoapi.api.pokemon.Pokemon
 @(pokemons: Map[String, List[Pokemon]])
-@import java.math.BigInteger; var firstTime=0; var count = 0; var c = 0; var p_count = 0;
+@import java.math.BigInteger; var count = 0; var c = 0; var p_count = 0;
 
 
 @main("IV chart"){
@@ -63,12 +63,7 @@
                             }else{
                                 <div class="col-md-3"> <b>  CP: @("%03d".format(pokemon.getCp())) IV: @("%,.2f".format(pokemon.getIvRatio()*100).replace(".00","")) Weight: @("%,.2f".format(pokemon.getWeightKg()).replace(".00","")) </b> </div>
                             }
-                            @{firstTime = 1}
                         }else{
-                            @if(firstTime == 1){
-                                <br/>
-                                @{firstTime = 2}
-                            }
                             <div class="col-md-3"> CP: @("%03d".format(pokemon.getCp())) IV: @("%,.2f".format(pokemon.getIvRatio()*100).replace(".00","")) Weight: @("%,.2f".format(pokemon.getWeightKg()).replace(".00","")) </div>
                         }
                     }

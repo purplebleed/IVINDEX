@@ -46,7 +46,7 @@ public class PokemonController extends Controller{
             session().remove(REFRESHTOKEN);
         }
 
-        return redirect("/pokemon");
+        return redirect("/");
     }
 
 
@@ -62,7 +62,7 @@ public class PokemonController extends Controller{
             if(go != null){
                 pokemon = listIvs(go,localeTW);
             }else{
-                return redirect("/pokemon");
+                return redirect("/");
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -81,7 +81,7 @@ public class PokemonController extends Controller{
 
             go = new PokemonGo(provider, httpClient);
         }else{
-            redirect("/pokemon");
+            redirect("/");
         }
 
         return go;
